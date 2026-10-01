@@ -26,7 +26,7 @@ def fetch(url, path):
     """Download a raw file, replacing any existing copy."""
     DATA.mkdir(exist_ok=True)
     print(f"asking {url}")
-    reply = requests.get(url, timeout=60, headers={"User-Agent": "SD5913 PolyU student"})
+    reply = requests.get(url, timeout=60)
     reply.raise_for_status()
     path.write_bytes(reply.content)
     print(f"saved data/{path.name} ({path.stat().st_size // 1024} KB), replacing any older copy")

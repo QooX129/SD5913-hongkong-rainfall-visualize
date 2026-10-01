@@ -38,3 +38,9 @@ Enter a year and month when prompted. The program refreshes the complete yearly
 HKO data file in `data/`, then saves and displays a bar chart for that month.
 Enable the yearly chart switch to display one total rainfall bar for each
 available month instead.
+
+To use the browser interface instead, run:
+
+```
+uv run --with streamlit --with matplotlib --with requests streamlit run streamlit_app.py
+```

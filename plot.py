@@ -74,7 +74,7 @@ def main():
     year = ask_for_number("Year", 1884, date.today().year)
     show_year = ask_for_yearly_chart()
     if not show_year:
-        month = ask_for_number("Month", 1, 12)
+        month = ask_for_number("Month(1-12)", 1, 12)
     data_path = fetch_year(year)
 
     fig, ax = plt.subplots(figsize=(10, 4.5))
