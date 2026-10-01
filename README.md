@@ -15,6 +15,8 @@ https://github.com/sd5913/pfad/blob/2026/reference/files.md first. Ten minutes. 
 
 <!-- What goes up and down, and why you looked at it. -->
 
+The graph shows the daily total rainfall over a month.
+
 ## The source
 
 <!-- A link to the page or endpoint the file came from, and one line on what is in
@@ -34,3 +36,5 @@ uv run plot.py
 
 Enter a year and month when prompted. The program refreshes the complete yearly
 HKO data file in `data/`, then saves and displays a bar chart for that month.
+Enable the yearly chart switch to display one total rainfall bar for each
+available month instead.
