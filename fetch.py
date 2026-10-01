@@ -4,42 +4,41 @@
 # ///
 
 """
-Fetch the numbers once, save the raw reply to data/, and never fetch again.
+Fetch one year of daily Hong Kong Observatory weather data.
 
     uv run fetch.py
 
-Change URL and FILE. The default is the Hong Kong Observatory's daily mean
-temperature for 2026, so the template runs before you have touched it and you
-can see what a file looks like when it arrives. It is an example, not your
-phenomenon: handing it in unchanged is handing in nothing.
+The yearly file includes daily rainfall. Each fetch replaces the file for that
+year in data/ so that incomplete current-year data can be refreshed.
 """
 
+from datetime import date
 from pathlib import Path
 
 import requests
 
-URL = ("https://data.weather.gov.hk/weatherAPI/opendata/opendata.php"
-       "?dataType=CLMTEMP&rformat=csv&station=HKO&year=2026")      # CHANGE ME
-FILE = "hko-daily-mean-temperature-2026.csv"                          # CHANGE ME: say what it is,
-                                                                      # keep the publisher's extension
+URL = "https://www.hko.gov.hk/cis/individual_day/daily_{year}.xml"
 HERE = Path(__file__).parent
 DATA = HERE / "data"
 
 
 def fetch(url, path):
-    """Ask for the file once. If it is already in data/, do nothing."""
-    if path.exists():
-        print(f"data/{path.name} is already here ({path.stat().st_size // 1024} KB). "
-              "Delete it to fetch again.")
-        return path
+    """Download a raw file, replacing any existing copy."""
     DATA.mkdir(exist_ok=True)
     print(f"asking {url}")
     reply = requests.get(url, timeout=60, headers={"User-Agent": "SD5913 PolyU student"})
     reply.raise_for_status()
-    path.write_bytes(reply.content)      # the raw reply, byte for byte: what arrived is what gets committed
-    print(f"saved data/{path.name} ({path.stat().st_size // 1024} KB). Now: git add data")
+    path.write_bytes(reply.content)
+    print(f"saved data/{path.name} ({path.stat().st_size // 1024} KB), replacing any older copy")
     return path
 
 
+def fetch_year(year):
+    """Fetch all available daily observations for one year."""
+    if not 1884 <= year <= date.today().year:
+        raise ValueError(f"year must be between 1884 and {date.today().year}")
+    return fetch(URL.format(year=year), DATA / f"hko-daily-weather-{year}.xml")
+
+
 if __name__ == "__main__":
-    fetch(URL, DATA / FILE)
+    fetch_year(int(input("Year: ")))

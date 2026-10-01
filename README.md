@@ -9,7 +9,7 @@ Then, in this order, at least 150 words in total.
 New to folders, paths, or the files here whose names start with a dot? Read
 https://github.com/sd5913/pfad/blob/2026/reference/files.md first. Ten minutes. -->
 
-![what the picture is](out/plot.png)
+![what the picture is](out/rainfall_sample.png)
 
 ## The phenomenon
 
@@ -29,6 +29,8 @@ you know what you did. -->
 ## Run it
 
 ```
-uv run fetch.py
 uv run plot.py
 ```
+
+Enter a year and month when prompted. The program refreshes the complete yearly
+HKO data file in `data/`, then saves and displays a bar chart for that month.
