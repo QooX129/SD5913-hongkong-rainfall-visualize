@@ -1,46 +1,37 @@
-# The phenomenon
-
-<!-- This is the SD5913 assignment 2 template. Everything in this file is yours to
-replace, and the check counts words: comments like this one are not words, so
-delete each one as you write. Start with the heading: name the phenomenon.
-
-Then, in this order, at least 150 words in total.
-
-New to folders, paths, or the files here whose names start with a dot? Read
-https://github.com/sd5913/pfad/blob/2026/reference/files.md first. Ten minutes. -->
-
-![what the picture is](out/rainfall_sample.png)
-
+# Hong Kong Rainfall Visualizer
 ## The phenomenon
+This visualizes the Hong Kong rainfall record to a graph. It provided two time frame mode - viewing the whole year and compare with other years, or every single day in a month.  
+It is useful for us to easily check the rainfall record and compare it between different years immediately and predict the possibility of raining in the future. 
 
-<!-- What goes up and down, and why you looked at it. -->
-
-The graph shows the daily total rainfall over a month.
+![rainfall_sample](out/rainfall_sample_1.png)
 
 ## The source
-
-<!-- A link to the page or endpoint the file came from, and one line on what is in
-the file: how many rows, what a row means, what the units are. -->
-
+I fetch my data from the Hong Kong Observatory: [https://www.hko.gov.hk/tc/cis/dailyElement.htm?ele=RF&y=2026](https://www.hko.gov.hk/tc/cis/dailyElement.htm?ele=RF&y=2026)  
+It provides various of data include but not limit to: rainfall, temperature, or pressure, etc.  
+For program easier access, it can direct calling web request 
+```https://www.hko.gov.hk/cis/individual_day/daily_{year}.xml```  
+Filling the {year} with the target year, to get the source data that shown on this page. It will get every single element data, every day, and follow with 12 data, which represent 12 months in the whole year, and stored as .xml. In our case just Rainfall(RF) is used and measured with (mm).
 ## What the picture shows
 
 <!-- Two or three sentences. Including what it hides: every transformation throws
 something away, and naming what yours threw away is the easiest way to sound like
 you know what you did. -->
 
-## Run it
 
+## Run it
+To generate a single year or a single month rainfall data. Use:
 ```
 uv run plot.py
 ```
+Enter a year and month when prompted. Generated image will store in `out/`.
 
-Enter a year and month when prompted. The program refreshes the complete yearly
-HKO data file in `data/`, then saves and displays a bar chart for that month.
-Enable the yearly chart switch to display one total rainfall bar for each
-available month instead.
 
 To use the browser interface instead, run:
 
 ```
 uv run --with streamlit --with matplotlib --with requests streamlit run streamlit_app.py
 ```
+Then run [http://localhost:8501](http://localhost:8501)  
+In whole-year mode, use **Compare with** to add up to four other years. Each
+comparison year has an adjustable color, and the shared opacity control. The primary year color is also adjustable.  
+To display a single month, uncheck the **Show the whole year** to switch to single month mode.
